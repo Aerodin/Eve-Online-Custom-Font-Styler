@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<!--
+  EVE Custom Font Styler
+  Copyright (c) 2026 Aerodin
+  Released under the MIT License. If you copy or modify this tool,
+  keep this notice and credit the original author.
+
+  Character library built from the EVE Online font list compiled by
+  u/Agitated-Device9837 on Reddit.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EVE Custom Font Styler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#13202d; --panel:#1a2b3b; --panel-2:#213549; --line:#2f4860;
+  --text:#dce6ee; --muted:#93a8ba; --accent:#e8a33d; --accent-ink:#1b1206;
+  --cyan:#6fc3d9; --bad:#ff7a6b;
+  --display:"Chakra Petch","Segoe UI",system-ui,sans-serif;
+  --body:"Barlow","Segoe UI",system-ui,sans-serif;
+  --glyph:"Segoe UI","Noto Sans","DejaVu Sans","Arial Unicode MS",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#eef2f5; --panel:#ffffff; --panel-2:#e3eaf0; --line:#c5d2dd;
+    --text:#1a2733; --muted:#566b7d; --accent:#b06e0e; --accent-ink:#ffffff;
+    --cyan:#1f7d96; --bad:#c23b2b;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#eef2f5; --panel:#ffffff; --panel-2:#e3eaf0; --line:#c5d2dd;
+  --text:#1a2733; --muted:#566b7d; --accent:#b06e0e; --accent-ink:#ffffff;
+  --cyan:#1f7d96; --bad:#c23b2b;
+}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none !important}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 20px 120px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,44px);line-height:1.05;margin:0 0 8px;letter-spacing:.01em}
+h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 4px}
+.lede{color:var(--muted);max-width:62ch;margin:0 0 26px}
+p.hint{color:var(--muted);margin:0 0 14px;font-size:15px;max-width:70ch}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+/* Converter */
+.forge{display:grid;grid-template-columns:1fr 1.3fr;gap:0;border:1px solid var(--line);background:var(--panel)}
+.forge > div{padding:18px}
+.forge .in{border-right:1px solid var(--line)}
+label.fl{display:block;font-weight:600;margin-bottom:8px}
+textarea{width:100%;min-height:220px;resize:none;overflow:hidden;background:var(--panel-2);color:var(--text);border:1px solid var(--line);padding:12px;font:16px/1.6 var(--body)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.seg{display:flex;flex-wrap:wrap;gap:4px;border:0}
+.seg button{border:1px solid var(--line) !important}
+.row.over{border-left-color:var(--bad)}
+.n.over{color:var(--bad);font-weight:600}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:disabled:hover{border-color:var(--line);color:inherit}
+.limit{display:inline-flex;gap:6px;align-items:center;font-size:15px}
+.limit input{width:56px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:5px 6px;font:15px var(--body)}
+.compose .cnt{font-size:13px;color:var(--muted);white-space:nowrap;min-width:48px;text-align:right}
+.compose .cnt.over{color:var(--bad);font-weight:600}
+.style-opts{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:15px}
+.style-opts select{margin-left:6px;background:var(--panel-2);color:var(--text);border:1px solid var(--line);padding:5px 8px;font:15px var(--glyph)}
+.style-desc{color:var(--muted);font-size:14px;margin-top:8px;max-width:60ch}
+.every{border:1px solid var(--line);background:var(--panel)}
+.erow{display:grid;grid-template-columns:150px 1fr auto auto;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.erow:first-child{border-top:0}
+.erow .sn{font-family:var(--display);font-weight:600;color:var(--muted)}
+.erow.on .sn{color:var(--accent)}
+.erow .g{font-family:var(--glyph);font-size:22px;word-break:break-all;white-space:pre-wrap}
+@media (max-width:600px){.erow{grid-template-columns:1fr auto auto}.erow .sn{grid-column:1/-1}}
+.seg button{background:transparent;border:0;padding:8px 14px;font-weight:500}
+.seg button + button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.toggle{display:inline-flex;gap:8px;align-items:center;font-size:15px}
+.toggle input{width:18px;height:18px;accent-color:var(--accent)}
+.out-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:10px}
+.rows{display:flex;flex-direction:column;gap:6px}
+.row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:10px 12px;background:var(--panel-2);border-left:3px solid var(--accent)}
+.row .g{font-family:var(--glyph);font-size:24px;line-height:1.3;word-break:break-all;white-space:pre-wrap}
+.row .n{color:var(--muted);font-size:13px;white-space:nowrap}
+mark.bad{background:transparent;color:var(--bad);text-decoration:underline wavy var(--bad)}
+.btn{background:transparent;border:1px solid var(--line);padding:6px 12px;font-size:14px;font-weight:600}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.solid{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.solid:hover{color:var(--accent-ink);filter:brightness(1.08)}
+.empty{color:var(--muted);padding:24px 4px}
+.warn{color:var(--bad);font-size:14px;margin-top:10px}
+
+/* Sections */
+section{margin-top:48px}
+.letters{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.lc{background:var(--panel);padding:10px}
+.lc .top{display:flex;justify-content:space-between;align-items:baseline}
+.lc .lt{font-family:var(--display);font-weight:600;color:var(--muted)}
+.lc .cur{font-family:var(--glyph);font-size:30px;line-height:1}
+.lc .alts{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.lc .alts button{font-family:var(--glyph);font-size:17px;min-width:32px;height:32px;background:var(--panel-2);border:1px solid transparent}
+.lc .alts button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.lc.fallback .cur{color:var(--muted)}
+.lc .tag{font-size:11px;color:var(--muted)}
+
+.lib-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.lib-tools input{background:var(--panel);border:1px solid var(--line);color:var(--text);padding:8px 10px;font:15px var(--body);min-width:220px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chips button{background:var(--panel);border:1px solid var(--line);padding:4px 10px;font-size:14px}
+.chips button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chips .ct{opacity:.7;margin-left:4px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.tile{background:var(--panel);border:0;height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:var(--glyph)}
+.tile .c{font-size:24px;line-height:1}
+.tile{position:relative}
+.tile .fl{position:absolute;top:2px;left:3px;font:600 9px var(--body);color:var(--accent)}
+.chips .tg{margin-left:6px;font-size:10px;font-weight:600;padding:0 4px;border:1px solid currentColor;opacity:.85}
+.notice{border-left:3px solid var(--accent);background:var(--panel);padding:10px 14px;margin:0 0 10px;font-size:15px;max-width:80ch}
+.notice strong{font-family:var(--display);font-weight:600}
+.tile .h{font-size:10px;color:var(--muted);font-family:var(--body)}
+.tile:hover{background:var(--panel-2)}
+.tile.hit{background:var(--accent);color:var(--accent-ink)}
+.tile.hit .h{color:var(--accent-ink)}
+
+/* Compose bar */
+.compose{position:fixed;left:0;right:0;bottom:0;background:var(--panel);border-top:2px solid var(--accent);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px))}
+.compose .in2{max-width:1100px;margin:0 auto;display:flex;gap:8px;align-items:center}
+.compose label{font-weight:600;white-space:nowrap}
+.compose input{flex:1;min-width:0;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:8px 10px;font:20px var(--glyph)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 16px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+footer{color:var(--muted);font-size:14px;margin-top:40px}
+
+@media (max-width:760px){
+  .forge{grid-template-columns:1fr}
+  .forge .in{border-right:0;border-bottom:1px solid var(--line)}
+  textarea{min-height:150px}
+  .compose label{display:none}
+}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>EVE Custom Font Styler</h1>
+  <p class="lede">Type names for ships, containers and anything else you can name in EVE, one per line, then copy styled versions built only from characters EVE Online's font can display.</p>
+
+  <div class="forge">
+    <div class="in">
+      <label class="fl" for="src">Names</label>
+      <textarea id="src" spellcheck="false" placeholder="Meridian Forge 3&#10;Halcyon Freight&#10;Ironclad Vector"></textarea>
+      <div class="controls">
+        <div class="seg" role="group" aria-label="Style" id="styles"></div>
+        <label class="toggle"><input type="checkbox" id="roman" checked> Turn numbers (digits or spelled) into Roman numerals</label>
+        <label class="limit" title="20 is the ship name limit. Other items may allow a different length, so adjust as needed.">Name limit <input type="number" id="limit" min="1" max="100" value="20"> characters</label>
+        <label class="limit">Padding <input type="number" id="pad" min="0" max="5" value="0"> <span id="padPrev" style="font-family:var(--glyph);color:var(--muted);white-space:pre"></span></label>
+      </div>
+      <div class="style-desc" id="styleDesc"></div>
+      <div class="style-opts" id="styleOpts" hidden>
+        <label>Bracket <select id="brType"></select></label>
+        <label id="brInnerWrap">Bracket padding <input type="number" id="brInner" min="0" max="5" value="0" style="width:56px;margin-left:6px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);padding:5px 6px;font:15px var(--body)"></label>
+        <label id="brScopeWrap">Wrap <select id="brScope">
+          <option value="letter">Each letter</option>
+          <option value="word">Each word</option>
+          <option value="name">Whole name</option>
+        </select></label>
+      </div>
+      <div style="margin-top:14px"><button class="btn" id="samples" type="button">New sample names</button></div>
+    </div>
+    <div>
+      <div class="out-head">
+        <span class="fl" style="margin:0;font-weight:600">Styled names</span>
+        <button class="btn" id="copyAll">Copy all</button>
+      </div>
+      <div class="rows" id="rows"></div>
+      <div class="warn" id="warn" hidden>Underlined characters aren't in EVE's font and will show as boxes in game.</div>
+      <div class="warn" id="overWarn" hidden>Names marked in red are over the limit, so EVE's rename box will cut them off. Shorten them or pick a style that adds fewer characters.</div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Every style</h2>
+    <p class="hint">Your first name in each style. Select one to switch the converter to it.</p>
+    <div class="every" id="every"></div>
+  </section>
+
+  <section id="mapSec">
+    <h2>Letter map</h2>
+    <p class="hint">Pick which lookalike each letter uses in this style. Greyed letters have no true match, so they fall back to a plain character. Your choices are saved in this browser.</p>
+    <div class="letters" id="letters"></div>
+    <div style="margin-top:10px"><button class="btn" id="resetMap">Reset this style</button></div>
+  </section>
+
+  <section>
+    <h2>Character library</h2>
+    <p class="hint">Every character in EVE's font list. Click one to add it to the compose bar at the bottom of the screen, then copy the result.</p>
+    <div id="notices"></div>
+    <div class="lib-tools">
+      <input id="q" type="search" placeholder="Find a character or code (e.g. 0280)" aria-label="Find a character">
+      <span id="libCount" class="hint" style="margin:0"></span>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <footer>
+    <p style="margin:0 0 8px">Made by <a href="https://github.com/Aerodin" target="_blank" rel="noopener" style="color:var(--cyan)">Aerodin</a>.</p>
+    <p style="margin:0 0 8px">The character library is built from the full EVE Online font list compiled by <a href="https://www.reddit.com/user/Agitated-Device9837/" target="_blank" rel="noopener" style="color:var(--cyan)">u/Agitated-Device9837</a>, shared across two Reddit posts many years ago. Thanks for putting it together.</p>
+    <p style="margin:0 0 8px">Always test a name in the rename box before committing, since EVE's name filter may reject characters the font can display.</p>
+    <p style="margin:0">Styled names still have to follow the <a href="https://support.eveonline.com/hc/en-us/articles/8563435867804-EVE-Online-Naming-Policy" target="_blank" rel="noopener" style="color:var(--cyan)">EVE Online Naming Policy</a>, which covers ship names and every other player-nameable item. GMs judge what a name says, not how it's spelled, so lookalike characters don't make an offensive name acceptable.</p>
+  </footer>
+</div>
+
+<div class="compose">
+  <div class="in2">
+    <label for="comp">Compose</label>
+    <input id="comp" type="text" placeholder="Click characters to build a name">
+    <span class="cnt" id="compCnt"></span>
+    <button class="btn solid" id="copyComp">Copy</button>
+    <button class="btn" id="clearComp">Clear</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const RAW = `“ ” ‘ ’ – — … ‐ ‒ ° © ® ™ • ½ ¼ ¾ ⅓ ⅔ † ‡ µ ¢ £ € « » ♠ ♣ ♥ ♦ ¿ × ÷ ± ∞ π ∅ ≤ ≥ ≠ ≈ ∧ ∨ ∩ ∪ ∈ ∀ ∃ ∄ ∑ ∏ ← ↑ → ↓ ↔ ↕ ↖ ↗ ↘ ↙ ↺ ↻ ⇒ ⇔⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ ⁺ ⁻ ⁽ ⁾ ⁿ ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ ₊ ₋ ₌ ₍ ₎ ¡ ¢ £ ¤ ¥ ¦ § ¨ © ª « ¬ ® ¯ ° ± ² ³ ´ µ ¶ · ¸ ¹ º » ¼ ½ ¾ ¿À Á Â Ã Ä Å Æ Ç È É Ê Ë Ì Í Î Ï Ð Ñ Ò Ó Ô Õ Ö × Ø Ù Ú Û Ü Ý Þ ß à á â ã ä å æ ç è é ê ë ì í î ï ð ñ ò ó ô õ ö ÷ ø ù ú û ü ý þ ÿ Ā ā Ă ă Ą ą Ć ć Ĉ ĉ Ċ ċ Č č Ď ď Đ đ Ē ē Ĕ ĕ Ė ė Ę ę Ě ě Ĝ ĝ Ğ ğ Ġ ġ Ģ ģ Ĥ ĥ Ħ ħ Ĩ ĩ Ī ī Ĭ ĭ Į į İ ı Ĳ ĳ Ĵ ĵ Ķ ķ ĸ Ĺ ĺ Ļ ļ Ľ ľ Ŀ ŀ Ł ł Ń ń Ņ ņ Ň ň ŉ Ŋ ŋ Ō ō Ŏ ŏ Ő ő Œ œ Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ŝ ŝ Ş ş Š š Ţ ţ Ť ť Ŧ ŧ Ũ ũ Ū ū Ŭ ŭ Ů ů Ű ű Ų ų Ŵ ŵ Ŷ ŷ Ÿ Ź ź Ż ż Ž ž ſ ƀ Ɓ Ƃ ƃ Ƅ ƅ Ɔ Ƈ ƈ Ɖ Ɗ Ƌ ƌ ƍ Ǝ Ə Ɛ Ƒ ƒ Ɠ Ɣ ƕ Ɩ Ɨ Ƙ ƙ ƚ ƛ Ɯ Ɲ ƞ Ɵ Ơ ơ Ƣ ƣ Ƥ ƥ Ʀ Ƨ ƨ Ʃ ƪ ƫ Ƭ ƭ Ʈ Ư ư Ʊ Ʋ Ƴ ƴ Ƶ ƶ Ʒ Ƹ ƹ ƺ ƻ Ƽ ƽ ƾ ƿ ǀ ǁ ǂ ǃ Ǆ ǅ ǆ Ǉ ǈ ǉ Ǌ ǋ ǌ Ǎ ǎ Ǐ ǐ Ǒ ǒ Ǔ ǔ Ǖ ǖ Ǘ ǘ Ǚ ǚ Ǜ ǜ ǝ Ǟ ǟ Ǡ ǡ Ǣ ǣ Ǥ ǥ Ǧ ǧ Ǩ ǩ Ǫ ǫ Ǭ ǭ Ǯ ǯ ǰ Ǳ ǲ ǳ Ǵ ǵ Ǻ ǻ Ǽ ǽ Ǿ ǿ Ȁ ȁ Ȃ ȃ Ȅ ȅ Ȇ ȇ Ȉ ȉ Ȋ ȋ Ȍ ȍ Ȏ ȏ Ȑ ȑ Ȓ ȓ Ȕ ȕ Ȗ ȗ Ș ș Ț ț ɐ ɑ ɒ ɓ ɔ ɕ ɖ ɗ ɘ ə ɚ ɛ ɜ ɝ ɞ ɟ ɠ ɡ ɢ ɣ ɤ ɥ ɦ ɧ ɨ ɩ ɪ ɫ ɬ ɭ ɮ ɯ ɰ ɱ ɲ ɳ ɴ ɵ ɶ ɷ ɸ ɹ ɺ ɻ ɼ ɽ ɾ ɿ ʀ ʁ ʂ ʃ ʄ ʅ ʆ ʇ ʈ ʉ ʊ ʋ ʌ ʍ ʎ ʏ ʐ ʑ ʒ ʓ ʔ ʕ ʖ ʗ ʘ ʙ ʚ ʛ ʜ ʝ ʞ ʟ ʠ ʡ ʢ ʣ ʤ ʥ ʦ ʧ ʨ ʰ ʱ ʲ ʳ ʴ ʵ ʶ ʷ ʸ ʹ ʺ ʻ ʼ ʽ ʾ ʿ ˀ ˁ ˂ ˃ ˄ ˅ ˆ ˇ ˈ ˉ ˊ ˋ ˌ ˍ ˎ ˏ ː ˑ ˒ ˓ ˔ ˕ ˖ ˗ ˘ ˙ ˚ ˛ ˜ ˝ ˞ ˠ ˡ ˢ ˣ ˤ ˥ ˦ ˧ ˨ ˩ ̀ ́ ̂ ̃ ̄ ̅ ̆ ̇ ̈ ̉ ̊ ̋ ̌ ̍ ̎ ̏ ̐ ̑ ̒ ̓ ̔ ̕ ̖ ̗ ̘ ̙ ̚ ̛ ̜ ̝ ̞ ̟ ̠ ̡ ̢ ̣ ̤ ̥ ̦ ̧ ̨ ̩ ̪ ̫ ̬ ̭ ̮ ̯ ̰ ̱ ̲ ̳ ̴ ̵ ̶ ̷ ̸ ̹ ̺ ̻ ̼ ̽ ̾ ̿ ̀ ́ ͂ ̓ ̈́ ͅ ͡ ʹ ͵ ͺ ; ΄ ΅ Ά · Έ Ή Ί Ό Ύ Ώ ΐ Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω Ϊ Ϋ ά έ ή ί ΰ α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ ς σ τ υ φ χ ψ ω ϊ ϋ ό ύ ώ ϐ ϑ ϒ ϓ ϔ ϕ ϖ Ϛ Ϝ Ϟ Ϡ Ϣ ϣ Ϥ ϥ Ϧ ϧ Ϩ ϩ Ϫ ϫ Ϭ ϭ Ϯ ϯ ϰ ϱ ϲ ϳ Ѐ Ё Ђ Ѓ Є Ѕ І Ї Ј Љ Њ Ћ Ќ Ѝ Ў Џ А Б В Г Д Е Ж З И Й К Л М Н О П Р С Т У Ф Х Ц Ч Ш Щ Ъ Ы Ь Э Ю Я а б в г д е ж з и й к л м н о п р с т у ф х ц ч ш щ ъ ы ь э ю я ё ђ ѓ є ѕ і ї ј љ њ ћ ќ ў џ Ѡ ѡ Ѣ ѣ Ѥ ѥ Ѧ ѧ Ѩ ѩ Ѫ ѫ Ѭ ѭ Ѯ ѯ Ѱ ѱ Ѳ ѳ Ѵ ѵ Ѷ ѷ Ѹ ѹ Ѻ ѻ Ѽ ѽ Ѿ ѿ Ҁ ҁ ҂ ҃ ҄ ҅ ҆ Ґ ґ Ғ ғ Ҕ ҕ Җ җ Ҙ ҙ Қ қ Ҝ ҝ Ҟ ҟ Ҡ ҡ Ң ң Ҥ ҥ Ҧ ҧ Ҩ ҩ Ҫ ҫ Ҭ ҭ Ү ү Ұ ұ Ҳ ҳ Ҵ ҵ Ҷ ҷ Ҹ ҹ Һ һ Ҽ ҽ Ҿ ҿ Ӏ Ӂ ӂ Ӄ ӄ Ӈ ӈ Ӌ ӌ Ӑ ӑ Ӓ ӓ Ӕ ӕ Ӗ ӗ Ә ә Ӛ ӛ Ӝ ӝ Ӟ ӟ Ӡ ӡ Ӣ ӣ Ӥ ӥ Ӧ ӧ Ө ө Ӫ ӫ Ӯ ӯ Ӱ ӱ Ӳ ӳ Ӵ ӵ Ӹ ӹ Ա Բ Գ Դ Ե Զ Է Ը Թ Ժ Ի Լ Խ Ծ Կ ء آ أ ؤ إ ئ ا ب ة ت ث ج ح خ د ذ ر ز س ش ص ض ط ظ ع غ ـ ف ق ك ل م ن ه و ى ي ً ٌ ٍ َ ُ ِ ّ ْ ٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ ٪ ٫ ٬ ٭ ٰ ٱ ٲ ٳ ٴ ٵ ٶ ٷ ٸ ٹ ٺ ٻ ټ ٽ پ ٿ ڀ ځ ڂ ڃ ڄ څ چ ڇ ڈ ډ ڊ ڋ ڌ ڍ ڎ ڏ ڐ ڑ ڒ ړ ڔ ڕ ږ ڗ ژ ڙ ښ ڛ ڜ ڝ ڞ ڟ ँ ं ः अ Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ Ⅹ Ⅺ Ⅻ Ⅼ Ⅽ Ⅾ Ⅿ ⅰ ⅱ ⅲ ⅳ ⅴ ⅵ ⅶ ⅷ ⅸ ⅹ ⅺ ⅻ ⅼ ⅽ ⅾ ⅿ ↀ ↁ ↂ ← ↑ → ↓ ↔ ↕ ↖ ↗ ↘ ↙ ↚ ↛ ↜ ↝ ↞ ↟ ↠ ↡ ↢ ↣ ↤ ↥ ↦ ↧ ↨ ↩ ↪ ↫ ↬ ↭ ↮ ↯ ↰ ↱ ↲ ↳ ↴ ↵ ↶ ↷ ↸ ↹ ↺ ↻ ↼ ↽ ↾ ↿⇀ ⇁ ⇂ ⇃ ⇄ ⇅ ⇆ ⇇ ⇈ ⇉ ⇊ ⇋ ⇌ ⇍ ⇎ ⇏ ⇐ ⇑ ⇒ ⇓ ⇔ ⇕ ⇖ ⇗ ⇘ ⇙ ⇚ ⇛ ⇜ ⇝ ⇞ ⇟ ⇠ ⇡ ⇢ ⇣ ⇤ ⇥ ⇦ ⇧ ⇨ ⇩ ⇪ ∀ ∁ ∂ ∃ ∄ ∅ ∆ ∇ ∈ ∉ ∊ ∋ ∌ ∍ ∎ ∏ ∐ ∑ − ∓ ∔ ∕ ∖ ∗ ∘ ∙ √ ∛ ∜ ∝ ∞ ∟ ∠ ∡ ∢ ∣ ∤ ∥ ∦ ∧ ∨ ∩ ∪ ∫ ∬ ∭ ∮ ∯ ∰ ∱ ∲ ∳ ∴ ∵ ∶ ∷ ∸ ∹ ∺ ∻ ∼ ∽ ∾ ∿ ≀ ≁ ≂ ≃ ≄ ≅ ≆ ≇ ≈ ≉ ≊ ≋ ≌ ≍ ≎ ≏ ≐ ≑ ≒ ≓ ≔ ≕ ≖ ≗ ≘ ≙ ≚ ≛ ≜ ≝ ≞ ≟ ≠ ≡ ≢ ≣ ≤ ≥ ≦ ≧ ≨ ≩ ≪ ≫ ≬ ≭ ≮ ≯ ≰ ≱ ≲ ≳ ≴ ≵ ≶ ≷ ≸ ≹ ≺ ≻ ≼ ≽ ≾ ≿ ⊀ ⊁ ⊂ ⊃ ⊄ ⊅ ⊆ ⊇ ⊈ ⊉ ⊊ ⊋ ⊌ ⊍ ⊎ ⊏ ⊐ ⊑ ⊒ ⊓ ⊔ ⊕ ⊖ ⊗ ⊘ ⊙ ⊚ ⊛ ⊜ ⊝ ⊞ ⊟ ⊠ ⊡ ⊢ ⊣ ⊤ ⊥ ⊦ ⊧ ⊨ ⊩ ⊪ ⊫ ⊬ ⊭ ⊮ ⊯ ⊰ ⊱ ⊲ ⊳ ⊴ ⊵ ⊶ ⊷ ⊸ ⊹ ⊺ ⊻ ⊼ ⊽ ⊾ ⊿ ⋀ ⋁ ⋂ ⋃ ⋄ ⋅ ⋆ ⋇ ⋈ ⋉ ⋊ ⋋ ⋌ ⋍ ⋎ ⋏ ⋐ ⋑ ⋒ ⋓ ⋔ ⋕ ⋖ ⋗ ⋘ ⋙ ⋚ ⋛ ⋜ ⋝ ⋞ ⋟ ⋠ ⋡ ⋢ ⋣ ⋤ ⋥ ⋦ ⋧ ⋨ ⋩ ⋪ ⋫ ⋬ ⋭ ⋮ ⋯ ⋰ ⋱ ⌀ ⌂ ⌃ ⌄ ⌅ ⌆ ⌇ ⌈ ⌉ ⌊ ⌋ ⌌ ⌍ ⌎ ⌏ ⌐ ⌑ ⌒ ⌓ ⌔ ⌕ ⌖ ⌗ ⌘ ⌙ ⌚ ⌛ ⌜ ⌝ ⌞ ⌟ ⌠ ⌡ ⌢ ⌣ ⌤ ⌥ ⌦ ⌧ ⌨ 〈 〉 ⌫ ⌬ ⌭ ⌮ ⌯ ⌰ ⌱ ⌲ ⌳ ⌴ ⌵ ⌶ ⌷ ⌸ ⌹ ⌺ ⌻ ⌼ ⌽ ⌾ ⌿ ⍀ ⍁ ⍂ ⍃ ⍄ ⍅ ⍆ ⍇ ⍈ ⍉ ⍊ ⍋ ⍌ ⍍ ⍎ ⍏ ⍐ ⍑ ⍒ ⍓ ⍔ ⍕ ⍖ ⍗ ⍘ ⍙ ⍚ ⍛ ⍜ ⍝ ⍞ ⍟ ⍠ ⍡ ⍢ ⍣ ⍤ ⍥ ⍦ ⍧ ⍨ ⍩ ⍪ ⍫ ⍬ ⍭ ⍮ ⍯ ⍰ ⍱ ⍲ ⍳ ⍴ ⍵ ⍶ ⍷ ⍸ ⍹ ⍺ ␀ ␁ ␂ ␃ ␄ ␅ ␆ ␇ ␈ ␉ ␊ ␋ ␌ ␍ ␎ ␏ ␐ ␑ ␒ ␓ ␔ ␕ ␖ ␗ ␘ ␙ ␚ ␛ ␜ ␝ ␞ ␟ ␠ ␡ ␢ ␣ ␤ ⑀ ⑁ ⑂ ⑃ ⑄ ⑅ ⑆ ⑇ ⑈ ⑉ ⑊ ① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮ ⑯ ⑰ ⑱ ⑲ ⑳ ⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ ⑽ ⑾ ⑿ ⒀ ⒁ ⒂ ⒃ ⒄ ⒅ ⒆ ⒇ ⒈ ⒉ ⒊ ⒋ ⒌ ⒍ ⒎ ⒏ ⒐ ⒑ ⒒ ⒓ ⒔ ⒕ ⒖ ⒗ ⒘ ⒙ ⒚ ⒛ ⒜ ⒝ ⒞ ⒟ ⒠ ⒡ ⒢ ⒣ ⒤ ⒥ ⒦ ⒧ ⒨ ⒩ ⒪ ⒫ ⒬ ⒭ ⒮ ⒯ ⒰ ⒱ ⒲ ⒳ ⒴ ⒵ Ⓐ Ⓑ Ⓒ Ⓓ Ⓔ Ⓕ Ⓖ Ⓗ Ⓘ Ⓙ Ⓚ Ⓛ Ⓜ Ⓝ Ⓞ Ⓟ Ⓠ Ⓡ Ⓢ Ⓣ Ⓤ Ⓥ Ⓦ Ⓧ Ⓨ Ⓩ ⓐ ⓑ ⓒ ⓓ ⓔ ⓕ ⓖ ⓗ ⓘ ⓙ ⓚ ⓛ ⓜ ⓝ ⓞ ⓟ ⓠ ⓡ ⓢ ⓣ ⓤ ⓥ ⓦ ⓧ ⓨ ⓩ ⓪ ─ ━ │ ┃ ┄ ┅ ┆ ┇ ┈ ┉ ┊ ┋ ┌ ┍ ┎ ┏ ┐ ┑ ┒ ┓ └ ┕ ┖ ┗ ┘ ┙ ┚ ┛ ├ ┝ ┞ ┟ ┠ ┡ ┢ ┣ ┤ ┥ ┦ ┧ ┨ ┩ ┪ ┫ ┬ ┭ ┮ ┯ ┰ ┱ ┲ ┳ ┴ ┵ ┶ ┷ ┸ ┹ ┺ ┻ ┼ ┽ ┾ ┿ ╀ ╁ ╂ ╃ ╄ ╅ ╆ ╇ ╈ ╉ ╊ ╋ ╌ ╍ ╎ ╏ ═ ║ ╒ ╓ ╔ ╕ ╖ ╗ ╘ ╙ ╚ ╛ ╜ ╝ ╞ ╟ ╠ ╡ ╢ ╣ ╤ ╥ ╦ ╧ ╨ ╩ ╪ ╫ ╬ ╭ ╮ ╯ ╰ ╱ ╲ ╳ ╴ ╵ ╶ ╷ ╸ ╹ ╺ ╻ ╼ ╽ ╾ ╿ ▀ ▁ ▂ ▃ ▄ ▅ ▆ ▇ █ ▉ ▊ ▋ ▌ ▍ ▎ ▏ ▐ ░ ▒ ▓ ▔ ▕ ■ □ ▢ ▣ ▤ ▥ ▦ ▧ ▨ ▩ ▪ ▫ ▬ ▭ ▮ ▯ ▰ ▱ ▲ △ ▴ ▵ ▶ ▷ ▸ ▹ ► ▻ ▼ ▽ ▾ ▿ ◀ ◁ ◂ ◃ ◄ ◅ ◆ ◇ ◈ ◉ ◊ ○ ◌ ◍ ◎ ● ◐ ◑ ◒ ◓ ◔ ◕ ◖ ◗ ◘ ◙ ◚ ◛ ◜ ◝ ◞ ◟ ◠ ◡ ◢ ◣ ◤ ◥ ◦ ◧ ◨ ◩ ◪ ◫ ◬ ◭ ◮ ◯ ☀ ☁ ☂ ☃ ☄ ★ ☆ ☇ ☈ ☉ ☊ ☋ ☌ ☍ ☎ ☏ ☐ ☑ ☒ ☓ ☚ ☛ ☜ ☝ ☞ ☟ ☠ ☡ ☢ ☣ ☤ ☥ ☦ ☧ ☨ ☩ ☪ ☫ ☬ ☭ ☮ ☯ ☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷ ☸ ☹ ☺ ☻ ☼ ☽ ☾ ☿ ♀ ♁ ♂ ♃ ♄ ♅ ♆ ♇ ♈ ♉ ♊ ♋ ♌ ♍ ♎ ♏ ♐ ♑ ♒ ♓ ♔ ♕ ♖ ♗ ♘ ♙ ♚ ♛ ♜ ♝ ♞ ♟ ♠ ♡ ♢ ♣ ♤ ♥ ♦ ♧ ♨ ♩ ♪ ♫ ♬ ♭ ♮ ♯ ✁ ✂ ✃ ✄ ✆ ✇ ✈ ✉ ✌ ✍ ✎ ✏ ✐ ✑ ✒ ✓ ✔ ✕ ✖ ✗ ✘ ✙ ✚ ✛ ✜ ✝ ✞ ✟ ✠ ✡ ✢ ✣ ✤ ✥ ✦ ✧ ✩ ✪ ✫ ✬ ✭ ✮ ✯ ✰ ✱ ✲ ✳ ✴ ✵ ✶ ✷ ✸ ✹ ✺ ✻ ✼ ✽ ✾ ✿ ❀ ❁ ❂ ❃ ❄ ❅ ❆ ❇ ❈ ❉ ❊ ❋ ❍ ❏ ❐ ❑ ❒ ❖ ❘ ❙ ❚ ❛ ❜ ❝ ❞ ❡ ❢ ❣ ❤ ❥ ❦ ❧ ❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ ❿ ➀ ➁ ➂ ➃ ➄ ➅ ➆ ➇ ➈ ➉ ➊ ➋ ➌ ➍ ➎ ➏ ➐ ➑ ➒ ➓ ➔ ➘ ➙ ➚ ➛ ➜ ➝ ➞ ➟ ➠ ➡ ➢ ➣ ➤ ➥ ➦ ➧ ➨ ➩ ➪ ➫ ➬ ➭ ➮ ➯ ➱ ➲ ➳ ➴ ➵ ➶ ➷ ➸ ➹ ➺ ➻ ➼ ➽ ➾ ぁ あ ぃ い ぅ う ぇ え ぉ お か が き ぎ く ぐ け げ こ ご さ ざ し じ す ず せ ぜ そ ぞ た だ ち ぢ っ つ づ て で と ど な に ぬ ね の は ば ぱ ひ び ぴ ふ ぶ ぷ へ べ ぺ ほ ぼ ぽ ま み ㍠ ㍡ ㍢ ㍣ ㍤ ㍥ ㍦ ㍧ ㍨ ㍩ ㍪ ㍫ ㍬ ㍭ ㍮ ㍯ ㍰ ㍱ ㍲ ㍳ ㍴ ㍵ ㍶ ㍻ ㍼ ㍽ ㍾ ㍿ ㎀ ㎁ ㎂ ㎃ ㎄ ㎅ ㎆ ㎇ ㎈ ㎉ ㎊ ㎋ ㎌ ㎍ ㎎ ㎏ ㎐ ㎑ ㎒ ㎓ ㎔ ㎕ ㎖ ㎗ ㎘ ㎙ ㎚ ㎛ ㎜ ㎝ ㎞ ㎟ ㎠ ㎡ ㎢ ㎣ ㎤ ㎥ ㎦ ㎧ ㎨ ㎩ ㎪ ㎫ ㎬ ㎭ ㎮ ㎯ ㎰ ㎱ ㎲ ㎳ ㎴ ㎵ ㎶ ㎷ ㎸ ㎹ ㎺ ㎻ ㎼ ㎽ ㎾ ㎿ ㏀ ㏁ ㏂ ㏃ ㏄ ㏅ ㏆ ㏇ ㏈ ㏉ ㏊ ㏋ ㏌ ㏍ ㏎ ㏏ ㏐ ㏑ ㏒ ㏓ ㏔ ㏕ ㏖ ㏗ ㏘ ㏙ ㏚ ㏛ ㏜ ㏝ 僀 僁 僂 僃 僄 僅 僆 僇 僈 僉 僊 僋 僌 働 僎 像 僐 僑 僒 僓 僔 僕 僖 僗 僘 僙 僚 僛 僜 僝 僞 僟 僠 僡 僢 僣 僤 僥 僦 僧 僨 僩 僪 僫 僬 僭 僮 僯 僰 僱 僲 僳 僴 僵 僶 僷 僸 價 僺 僻 僼 僽 僾 僿 가 각 갂 갃 간 갅 갆 갇 갈 갉 갊 갋 갌 갍 갎 갏 감 갑 값 갓 갔 강 갖 갗 갘 같 갚 갛 개 객 갞 갟 갠 갡 갢 갣 갤 갥 갦 갧 갨 갩 갪 갫 갬 갭 갮 갯 갰 갱 갲 갳 갴 갵 갶 갷 갸 갹 갺 갻 갼 갽 갾 갿 ﬀ ﬁ ﬂ ﬃ ﬄ ﬅ ﬆ ﬓ ﬔ ﬕ ﬖ ﬗ ﬞ ײַ ￠ ￡ ￢ ￣ ￤ ￥ ￦ ￧ ￨ ￩ ￪ ￫ ￬ ￭ ￮ ￼`;
+
+// ---------- Character set ----------
+const CHARS = [...new Set(Array.from(RAW))].filter(c =>
+  !/\s/.test(c) && c !== '\uFFFD' && !/[\p{Cc}\p{Cf}]/u.test(c));
+const SUPPORTED = new Set(CHARS);
+for (let i = 32; i < 127; i++) SUPPORTED.add(String.fromCharCode(i));
+
+const GROUPS = [
+  ['Latin & symbols',0x00,0x24F],['IPA & small caps',0x250,0x2AF],['Modifiers',0x2B0,0x2FF],
+  ['Combining marks',0x300,0x36F],['Greek',0x370,0x3FF],['Cyrillic',0x400,0x4FF],
+  ['Armenian',0x530,0x58F],['Hebrew',0x590,0x5FF],['Arabic',0x600,0x6FF],['Devanagari',0x900,0x97F],
+  ['Punctuation',0x2000,0x20CF],['Letterlike & numbers',0x2100,0x218F],['Arrows',0x2190,0x21FF],
+  ['Math',0x2200,0x22FF],['Technical',0x2300,0x23FF],['Control pictures',0x2400,0x243F],
+  ['Enclosed',0x2440,0x24FF],['Box drawing',0x2500,0x257F],['Blocks',0x2580,0x259F],
+  ['Shapes',0x25A0,0x25FF],['Misc symbols',0x2600,0x26FF],['Dingbats',0x2700,0x27BF],
+  ['Japanese',0x3040,0x30FF],['CJK compatibility',0x3300,0x33FF],['CJK',0x4E00,0x9FFF],
+  ['Hangul',0xAC00,0xD7AF],['Ligatures',0xFB00,0xFB4F],['Fullwidth',0xFF00,0xFFEF],['Other',0xFFF0,0x10FFFF]
+];
+const isRTL = c => /[\p{Script=Arabic}\p{Script=Hebrew}]/u.test(c);
+const isMark = c => /\p{M}/u.test(c);
+const groupOf = c => { const cp = c.codePointAt(0); const g = GROUPS.find(([,a,b]) => cp>=a && cp<=b); return g ? g[0] : 'Other'; };
+
+// ---------- Styles ----------
+const L = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const range=(a,b)=>Array.from({length:b-a+1},(_,i)=>String.fromCodePoint(a+i));
+const ABOVE=[...range(0x300,0x314),...range(0x33D,0x33F)];
+const BELOW=range(0x316,0x333);
+const SAMPLES='Meridian Forge 3\nHalcyon Freight\nIronclad Vector\nTitan Refinery 7\nObsidian Relay\nKestrel Logistics\nVanguard Assembly\nAegis Bulkhead 2\nSterling Dynamics\nHelix Foundry\nCorvus Haulage 4\nAtlas Drydock';
+const BRACKETS = [['glyph','⒜ Built-in'],['()','( )'],['[]','[ ]'],['{}','{ }'],['<>','< >'],['«»','« »'],['〈〉','〈 〉'],['⌈⌉','⌈ ⌉'],['⌊⌋','⌊ ⌋'],['⁽⁾','⁽ ⁾'],['||','| |'],['//','/ /'],['\\\\','\\ \\'],['::',': :'],['••','• •']];
+function wrapBrackets(s, pair, scope, inner, gapN){
+  let [Lb,Rb] = Array.from(pair);
+  if(inner>0){ Lb = Lb+' '.repeat(inner); Rb = ' '.repeat(inner)+Rb; }
+  const gap = ' '.repeat(gapN), wordGap = ' '.repeat(2*gapN+1);
+  const units = w => w.match(/\P{M}\p{M}*/gu) || [];
+  const words = s.split(' ');
+  if(scope==='name') return Lb + words.map(w=>units(w).join(gap)).join(wordGap) + Rb;
+  if(scope==='word') return words.map(w=>w ? Lb+units(w).join(gap)+Rb : w).join(wordGap);
+  return words.map(w=>units(w).map(c=>Lb+c+Rb).join(gap)).join(wordGap);
+}
+const NAME_A = ['Meridian','Obsidian','Corvus','Aegis','Halcyon','Vanguard','Sterling','Kestrel','Atlas','Helix','Titan','Ironclad','Cobalt','Argent','Sable','Caliber','Cinder','Dominion','Equinox','Fulcrum','Granite','Harbor','Horizon','Impulse','Keystone','Lumen','Magnetar','Nadir','Onyx','Paragon','Quarry','Radiant','Aurora','Solstice','Tensor','Umbra','Vector','Warden','Zenith','Crimson'];
+const NAME_B = ['Ascendant','Covenant','Resolve','Lance','Spear','Sovereign','Envoy','Herald','Corsair','Bulwark','Reckoning','Requiem','Endeavor','Fortitude','Odyssey','Mandate','Verdict','Ember','Gale','Shroud','Mariner','Voyager','Rover','Promise','Crown','Banner','Oath','Exodus','Valor','Tribute','Legacy','Defiance','Dawn','Pathfinder','Wayfarer','Courier','Steward','Anvil','Accord','Vow'];
+function randomSamples(count=12){
+  const pick = a => a[Math.floor(Math.random()*a.length)];
+  const out = new Set(), usedA = new Set(), usedB = new Set(); let tries = 0;
+  while(out.size < count && tries++ < 500){
+    const a = pick(NAME_A), b = pick(NAME_B);
+    if(usedA.has(a) || usedB.has(b)) continue;
+    const r = Math.random(), num = ' '+(2+Math.floor(Math.random()*11));
+    let name = r < 0.15 ? b+num : r < 0.40 ? a+' '+b+num : a+' '+b;
+    if(lenOf(convert(name,'plain')) > getLimit()) continue;
+    out.add(name); usedA.add(a); usedB.add(b);
+  }
+  return [...out];
+}
+const STYLES = {
+  smallcaps:{label:'Small caps', desc:'Short capital letters. D, E, J, P and Q have no match, so they stay lowercase.', fallback:['D','E','J','P','Q'], map:{
+    A:['ʌ','ɑ','α'],B:['ʙ','в'],C:['c','ς'],D:['d','ɗ','∂'],E:['e','ɛ','ε'],F:['ғ','ƒ'],G:['ɢ','ɡ'],
+    H:['ʜ','н'],I:['ɪ','ı','ι'],J:['j','ʝ'],K:['к','ĸ'],L:['ʟ'],M:['м'],N:['ɴ','и'],O:['o','σ'],
+    P:['p','ρ'],Q:['q'],R:['ʀ','я','ɾ'],S:['s','ѕ'],T:['т','ƭ'],U:['u','υ'],V:['v','ν'],
+    W:['w','ш','ω'],X:['x','х'],Y:['ʏ','у'],Z:['z','ʐ']}},
+  curvy:{label:'Curvy', desc:'Flowing, hooked letters borrowed from Greek and phonetic alphabets.', fallback:[], map:{
+    A:['α','ɑ'],B:['β','в'],C:['ς','ƈ','¢'],D:['∂','ɗ'],E:['ε','ɛ'],F:['ƒ'],G:['ɠ','ɡ'],H:['ɦ','ђ'],
+    I:['ι','ɩ'],J:['ʝ'],K:['ƙ','к'],L:['ɭ','ʅ'],M:['ɱ','м'],N:['η','ɳ'],O:['σ','ø'],P:['ρ','þ'],
+    Q:['ʠ','φ'],R:['ʀ','ɾ','ɽ'],S:['ʂ','ș'],T:['ƭ','ţ'],U:['υ','µ'],V:['ν','ʋ'],W:['ω','ɯ'],
+    X:['χ','×'],Y:['ƴ','γ'],Z:['ʐ','ƶ','ʑ']}},
+  obscure:{label:'Obscure', desc:'Each letter swapped for a symbol that resembles it: currency, math and marks.', fallback:[], map:{
+    A:['∆','Λ'],B:['ß'],C:['¢','©'],D:['Ð','∂'],E:['€','∑','Ǝ'],F:['ƒ'],G:['Ǥ'],H:['Ħ','╫'],
+    I:['¡','ǀ'],J:['ʝ','⌡'],K:['Ҝ','ĸ'],L:['£','∟'],M:['♏','ʍ'],N:['Ŋ','∏'],O:['⊕','Ø','◎'],
+    P:['¶','ρ'],Q:['Ǫ','Ҩ'],R:['®','Я'],S:['§','$'],T:['†','⊤'],U:['µ','∪'],V:['√','∨'],
+    W:['Ш','ω'],X:['×','⊗'],Y:['¥','Ψ'],Z:['Ƶ','ʐ']}},
+  cryptic:{label:'Cryptic', desc:'Stacked accent marks above and below each character for a corrupted, glitched look. Adds characters, so names get longer.', fn:s=>
+    Array.from(s).map((c,i)=>{ if(!/[\p{L}\p{N}]/u.test(c)) return c; const cp=c.codePointAt(0);
+      return c+ABOVE[(i*7+cp)%ABOVE.length]+BELOW[(i*13+cp*3)%BELOW.length]; }).join('')},
+  cyrillic:{label:'Faux Cyrillic', desc:'Russian-looking letters chosen for shape, not sound. Letters with no lookalike stay as they are.', fallback:['C','D','G','J','L','Q'], map:{
+    A:['Д','Λ'],B:['Б','Ъ'],C:['C','Ҫ'],D:['D'],E:['Є','Ё'],F:['Ғ'],G:['G'],H:['Н','Ң'],I:['Ї','І'],
+    J:['Ј'],K:['К','Ќ','Ҝ'],L:['L','Г'],M:['М'],N:['И','Й'],O:['Ф','О'],P:['Р'],Q:['Q','Ҩ'],R:['Я'],
+    S:['Ѕ'],T:['Т','Ҭ'],U:['Ц','Џ'],V:['Ѵ'],W:['Ш','Щ'],X:['Ж','Х'],Y:['Ч','Ў','У'],Z:['З']}},
+  greek:{label:'Greek', desc:'Greek capitals standing in for Latin letters. G, J, L, Q and R have no lookalike.', fallback:['G','J','L','Q','R'], map:{
+    A:['Λ','Α','Δ'],B:['β','Β'],C:['ς','ϲ'],D:['Δ','∂'],E:['Σ','Ξ','Ε'],F:['Ϝ','Φ'],G:['G'],H:['Η','Ή'],
+    I:['Ι','ι'],J:['J'],K:['Κ','κ'],L:['L'],M:['Μ'],N:['Π','Ν','η'],O:['Θ','Ω','Ο'],P:['Ρ','ρ'],
+    Q:['Q','φ'],R:['R'],S:['Ϛ','S'],T:['Τ','τ'],U:['Ʊ','υ'],V:['ν','V'],W:['Ω','ω'],X:['Χ','Ξ'],
+    Y:['Ψ','Υ','γ'],Z:['Ζ']}},
+  accented:{label:'Accented', desc:'Keeps your capitalization and adds accents, strokes and hooks. M, V and X have no accented form.', cased:true, fallback:['M','V','X'], map:{
+    A:['Åå','Áá','Ää','Āā'],B:['Ɓɓ','Ƃƃ'],C:['Çç','Ćć','Čč'],D:['Ðð','Ďď','Đđ'],E:['Êê','Éé','Ëë','Ēē'],
+    F:['Ƒƒ'],G:['Ğğ','Ĝĝ','Ģģ'],H:['Ħħ','Ĥĥ'],I:['Ïï','Íí','Îî'],J:['Ĵĵ'],K:['Ķķ','Ƙƙ'],
+    L:['Łł','Ľľ','Ŀŀ'],M:['Mm'],N:['Ññ','Ńń','Ňň','Ŋŋ'],O:['Øø','Öö','Őő','Ōō'],P:['Þþ','Ƥƥ'],
+    Q:['Ǫǫ'],R:['Řř','Ŕŕ','Ŗŗ'],S:['Šš','Śś','Şş'],T:['Ŧŧ','Ťť','Ţţ'],U:['Ůů','Üü','Űű','Ūū'],
+    V:['Vv'],W:['Ŵŵ'],X:['Xx'],Y:['Ÿÿ','Ýý','Ŷŷ'],Z:['Žž','Źź','Żż','Ƶƶ']}},
+  upside:{label:'Upside down', desc:'Flipped letters in reverse order, so the name reads correctly if you turn your screen over.', fallback:[], map:{
+    A:['ɐ'],B:['q'],C:['ɔ'],D:['p'],E:['ǝ'],F:['ɟ'],G:['ƃ'],H:['ɥ'],I:['ı'],J:['ɾ'],K:['ʞ'],L:['l','ʅ'],
+    M:['ɯ'],N:['u'],O:['o'],P:['d'],Q:['b'],R:['ɹ'],S:['s'],T:['ʇ'],U:['n'],V:['ʌ'],W:['ʍ'],X:['x'],
+    Y:['ʎ'],Z:['z']},
+    extra:{'?':'¿','!':'¡','.':'˙',',':"'","'":',','(':')',')':'(','[':']',']':'[','6':'9','9':'6'},
+    post:s=>Array.from(s).reverse().join('')},
+  bubble:{label:'Bubble', desc:'Letters and numbers inside circles.', fallback:[], digits:['⓪','①','②','③','④','⑤','⑥','⑦','⑧','⑨'],
+    map:Object.fromEntries(L.map((c,i)=>[c,[String.fromCodePoint(0x24B6+i),String.fromCodePoint(0x24D0+i)]]))},
+  bracketed:{label:'Bracketed', desc:'Letters and numbers wrapped in brackets. The built-in ⒜ option uses one character per letter. Other brackets add two characters for each letter, word or name they wrap.', fallback:[], digits:['0','⑴','⑵','⑶','⑷','⑸','⑹','⑺','⑻','⑼'],
+    map:Object.fromEntries(L.map((c,i)=>[c,[String.fromCodePoint(0x249C+i)]]))},
+  strike:{label:'Strikethrough', desc:'A line through every character. Doubles the character count.', fn:s=>Array.from(s).map(c=>c===' '?c:c+'\u0336').join('')},
+  underline:{label:'Underline', desc:'A continuous line under the whole name. Doubles the character count.', fn:s=>Array.from(s).map(c=>c+'\u0332').join('')},
+  slashed:{label:'Slashed', desc:'A diagonal slash through every character. Doubles the character count.', fn:s=>Array.from(s).map(c=>c===' '?c:c+'\u0338').join('')},
+  plain:{label:'Plain', desc:'Your text unchanged, apart from Roman numerals if switched on.', fallback:[], map:null}
+};
+
+// ---------- State ----------
+const store = {
+  get(k,d){ try{ const v = localStorage.getItem(k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+let style = store.get('ens.style','smallcaps'); if(!STYLES[style]) style = 'smallcaps';
+let picks = store.get('ens.picks',{});
+let libGroup = 'All';
+let brType = store.get('ens.brType','glyph'); if(!BRACKETS.some(b=>b[0]===brType)) brType='glyph';
+let brScope = store.get('ens.brScope','letter');
+let brInner = (()=>{ const n = parseInt(store.get('ens.brInner',0),10); return n>=0&&n<=5 ? n : 0; })();
+let pad = (()=>{ const v = store.get('ens.pad', store.get('ens.brPad', 0)); const n = v===true ? 1 : parseInt(v,10); return n>=0 && n<=5 ? n : 0; })();
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function glyphFor(letter, st=style){
+  const m = STYLES[st].map; if(!m) return null;
+  const opts = m[letter]; const i = (picks[st] && picks[st][letter]) || 0;
+  return opts[i] || opts[0];
+}
+function toRoman(n){
+  const t=[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+  let r=''; for(const [v,s] of t){ while(n>=v){ r+=s; n-=v; } } return r;
+}
+const ONES = {one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19};
+const TENS = {twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90};
+const UNIT = 'one|two|three|four|five|six|seven|eight|nine';
+const NUM_WORDS = new RegExp(`\\b(?:(${Object.keys(TENS).join('|')})(?:[- ](${UNIT}))?|(${Object.keys(ONES).sort((a,b)=>b.length-a.length).join('|')}))\\b`,'gi');
+function spaceOut(t, n=pad){
+  const gap = ' '.repeat(n);
+  const g = w => (w.match(/\P{M}\p{M}*/gu) || []).join(gap);
+  return t.split(' ').map(g).join(' '.repeat(2*n+1));
+}
+function padApplies(st){ return pad>0 && !(st==='bracketed' && brType!=='glyph'); }
+function convert(line, st=style){
+  const out = convertRaw(line, st);
+  return padApplies(st) ? spaceOut(out) : out;
+}
+function convertRaw(line, st=style){
+  let s = line;
+  if($('roman').checked){
+    s = s.replace(NUM_WORDS,(m,t,o,u)=>{ const n = t ? TENS[t.toLowerCase()] + (o ? ONES[o.toLowerCase()] : 0) : ONES[u.toLowerCase()]; return toRoman(n); });
+    s = s.replace(/([A-Za-z])(\d{1,4})\b/g,'$1 $2');
+    s = s.replace(/\b(\d{1,4})\b/g,(m,d)=>{ const n=+d; return n>0&&n<4000 ? toRoman(n) : m; });
+  }
+  const S = STYLES[st];
+  if(st==='bracketed' && brType!=='glyph') return wrapBrackets(s, brType, brScope, brInner, pad);
+  if(S.fn) return S.fn(s);
+  let out = Array.from(s).map(ch=>{
+    const up = ch.toUpperCase();
+    if(S.map && /^[A-Z]$/.test(up)){
+      const g = glyphFor(up, st);
+      if(S.cased){ const [U,lo] = Array.from(g); return ch===up ? U : lo; }
+      return g;
+    }
+    if(S.extra && S.extra[ch]) return S.extra[ch];
+    if(S.digits && /^\d$/.test(ch)) return S.digits[+ch];
+    return ch;
+  }).join('');
+  if(S.post) out = S.post(out);
+  return out;
+}
+
+// ---------- Render ----------
+function renderPadOptions(){
+  $('padPrev').textContent = convert('abc');
+  $('pad').value = pad;
+}
+function renderStyles(){
+  $('styles').innerHTML = Object.entries(STYLES).map(([k,v]) =>
+    `<button type="button" data-s="${k}" aria-pressed="${k===style}">${v.label}</button>`).join('');
+  $('styleDesc').textContent = STYLES[style].desc;
+  $('styleOpts').hidden = style!=='bracketed';
+  $('brScopeWrap').hidden = brType==='glyph';
+  $('brInnerWrap').hidden = brType==='glyph';
+  $('brInner').value = brInner;
+  renderPadOptions();
+}
+function renderEvery(){
+  const first = $('src').value.split('\n').map(l=>l.trim()).find(Boolean) || 'Meridian Forge 3';
+  $('every').innerHTML = Object.entries(STYLES).map(([k,v])=>{
+    const out = convert(first,k);
+    const html = Array.from(out).map(c => SUPPORTED.has(c) ? esc(c) : `<mark class="bad">${esc(c)}</mark>`).join('');
+    const n = lenOf(out), over = n > getLimit();
+    return `<div class="erow${k===style?' on':''}"><span class="sn">${v.label}${over ? ' '+countHtml(n) : ''}</span><span class="g">${html}</span>
+      <button class="btn" data-use="${k}" aria-pressed="${k===style}">${k===style?'Selected':'Select'}</button>
+      <button class="btn" data-copy="${esc(out)}" ${over?'disabled title="Over the name limit"':''}>Copy</button></div>`;
+  }).join('');
+}
+const lenOf = t => Array.from(t).length;
+const getLimit = () => { const v = parseInt($('limit').value,10); return v>0 ? v : 20; };
+function countHtml(n){ const lim=getLimit(); const over=n-lim;
+  return `<span class="n${over>0?' over':''}">${over>0 ? over+' over' : n+'/'+lim}</span>`; }
+function autosize(){ const t=$('src'); t.style.height='auto'; t.style.height=(t.scrollHeight+2)+'px'; }
+window.addEventListener('resize', ()=>autosize());
+try{ document.fonts.ready.then(()=>autosize()); }catch(e){}
+function renderOutput(){
+  autosize();
+  const lines = $('src').value.split('\n').map(l=>l.trim()).filter(Boolean);
+  const rows = $('rows'); let anyBad = false, anyOver = false;
+  if(!lines.length){ rows.innerHTML = '<div class="empty">Your styled names will show up here.</div>'; $('warn').hidden = true; $('overWarn').hidden = true; renderEvery(); return; }
+  rows.innerHTML = lines.map((l,i)=>{
+    const out = convert(l);
+    const html = Array.from(out).map(c => SUPPORTED.has(c) ? esc(c) : (anyBad=true, `<mark class="bad">${esc(c)}</mark>`)).join('');
+    const n = lenOf(out), over = n > getLimit(); if(over) anyOver = true;
+    return `<div class="row${over?' over':''}"><span class="g">${html}</span>${countHtml(n)}<button class="btn" data-copy="${esc(out)}" ${over?'disabled title="Over the name limit"':''}>Copy</button></div>`;
+  }).join('');
+  $('warn').hidden = !anyBad;
+  $('overWarn').hidden = !anyOver;
+  renderEvery();
+}
+function renderMap(){
+  const st = STYLES[style];
+  const showMap = st.map && !(style==='bracketed' && brType!=='glyph');
+  $('mapSec').hidden = !showMap;
+  if(!showMap) return;
+  $('letters').innerHTML = L.map(letter=>{
+    const opts = st.map[letter]; const cur = glyphFor(letter);
+    const fb = (st.fallback||[]).includes(letter) && cur===opts[0];
+    return `<div class="lc${fb?' fallback':''}"><div class="top"><span class="lt">${letter}</span><span class="cur">${esc(cur)}</span></div>
+      ${fb ? '<div class="tag">No lookalike</div>' : ''}
+      <div class="alts">${opts.map((o,i)=>`<button type="button" data-l="${letter}" data-i="${i}" aria-pressed="${o===cur}" title="${Array.from(o).map(c=>'U+'+c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0')).join(' ')}">${esc(o)}</button>`).join('')}</div></div>`;
+  }).join('');
+}
+function flagsOf(g){ const list = CHARS.filter(c=>groupOf(c)===g);
+  return { rtl:list.filter(isRTL).length, mark:list.filter(isMark).length }; }
+function renderNotices(){
+  const groups = GROUPS.map(g=>g[0]).map(g=>[g,flagsOf(g)]);
+  const rtlGroups = groups.filter(([,f])=>f.rtl).map(([g])=>g);
+  const markGroups = groups.filter(([,f])=>f.mark).map(([g])=>g);
+  const f = libGroup==='All' ? {rtl:1,mark:1} : flagsOf(libGroup);
+  const list = a => a.join(', ').replace(/, ([^,]*)$/,' and $1');
+  let html = '';
+  if(f.rtl) html += `<p class="notice"><strong>Right-to-left characters.</strong> ${libGroup==='All' ? `The ${list(rtlGroups)} groups contain` : `This group contains ${f.rtl}`} characters written right to left, marked <b>RTL</b> on each tile.${libGroup==='Arabic'||libGroup==='All' ? ' Arabic letters also join to their neighbors.' : ''} Next to other text they can appear reordered, both in the compose bar and in EVE. A single one at the start or end of a name is the most predictable.</p>`;
+  if(f.mark) html += `<p class="notice"><strong>Attaching marks.</strong> ${libGroup==='All' ? `The ${list(markGroups)} groups contain` : `This group contains ${f.mark}`} marks that attach to the character before them instead of standing alone. They're shown on a dotted circle ◌. Add the letter first, then the mark. Each mark counts toward the name limit.</p>`;
+  $('notices').innerHTML = html;
+}
+function renderChips(){
+  const counts = {}; CHARS.forEach(c=>{ const g = groupOf(c); counts[g]=(counts[g]||0)+1; });
+  const names = ['All', ...GROUPS.map(g=>g[0]).filter(g=>counts[g])];
+  counts.All = CHARS.length;
+  $('chips').innerHTML = names.map(n=>{
+    const f = n==='All' ? null : flagsOf(n);
+    const tags = f ? (f.rtl?'<span class="tg" title="Contains right-to-left characters">RTL</span>':'') + (f.mark?'<span class="tg" title="Contains attaching marks">Marks</span>':'') : '';
+    return `<button type="button" data-g="${n}" aria-pressed="${n===libGroup}">${n}<span class="ct">${counts[n]}</span>${tags}</button>`;
+  }).join('');
+  renderNotices();
+}
+function renderGrid(){
+  const q = $('q').value.trim().toLowerCase().replace(/^u\+/,'');
+  const list = CHARS.filter(c=>{
+    if(libGroup!=='All' && groupOf(c)!==libGroup) return false;
+    if(!q) return true;
+    const hex = c.codePointAt(0).toString(16).padStart(4,'0');
+    return c===q || c.toLowerCase()===q || hex.includes(q);
+  });
+  $('libCount').textContent = `${list.length} character${list.length===1?'':'s'}`;
+  $('grid').innerHTML = list.map(c=>{
+    const hex = c.codePointAt(0).toString(16).toUpperCase().padStart(4,'0');
+    const show = /\p{M}/u.test(c) ? '◌'+c : c;
+    const rtl = isRTL(c);
+    return `<button type="button" class="tile" data-c="${esc(c)}" title="U+${hex}${rtl?' (right-to-left)':''}${isMark(c)?' (attaching mark)':''}" aria-label="Add U+${hex}">${rtl?'<span class="fl">RTL</span>':''}<span class="c">${esc(show)}</span><span class="h">${hex}</span></button>`;
+  }).join('');
+}
+
+// ---------- Clipboard ----------
+let toastT;
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1400); }
+async function copy(text){
+  if(!text){ toast('Nothing to copy'); return; }
+  try{ await navigator.clipboard.writeText(text); toast('Copied'); }
+  catch(e){
+    const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); toast('Copied'); }catch(_){ toast('Copy failed. Select the text and copy it manually.'); }
+    ta.remove();
+  }
+}
+
+// ---------- Events ----------
+$('src').value = store.get('ens.input',SAMPLES);
+$('brType').innerHTML = BRACKETS.map(([v,l])=>`<option value="${esc(v)}">${esc(l)}</option>`).join('');
+$('brType').value = brType; $('brScope').value = brScope;
+$('brType').addEventListener('change',()=>{ brType=$('brType').value; store.set('ens.brType',brType); renderStyles(); renderMap(); renderOutput(); });
+$('brScope').addEventListener('change',()=>{ brScope=$('brScope').value; store.set('ens.brScope',brScope); renderPadOptions(); renderOutput(); });
+$('brInner').addEventListener('input',()=>{ const n=parseInt($('brInner').value,10); brInner = isNaN(n) ? 0 : Math.max(0,Math.min(5,n)); store.set('ens.brInner',brInner); renderPadOptions(); renderOutput(); });
+$('pad').addEventListener('input',()=>{ const n=parseInt($('pad').value,10); pad = isNaN(n) ? 0 : Math.max(0,Math.min(5,n)); store.set('ens.pad',pad); renderPadOptions(); renderOutput(); });
+$('samples').addEventListener('click',()=>{ const t=randomSamples().join('\n'); $('src').value=t; store.set('ens.input',t); renderOutput(); });
+$('roman').checked = store.get('ens.roman', true);
+$('src').addEventListener('input',()=>{ store.set('ens.input',$('src').value); renderOutput(); });
+$('roman').addEventListener('change',()=>{ store.set('ens.roman',$('roman').checked); renderOutput(); });
+$('styles').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-s]'); if(!b) return;
+  style=b.dataset.s; store.set('ens.style',style); renderStyles(); renderMap(); renderOutput();
+});
+$('letters').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-l]'); if(!b) return;
+  picks[style]=picks[style]||{}; picks[style][b.dataset.l]=+b.dataset.i; store.set('ens.picks',picks);
+  renderMap(); renderOutput(); renderPadOptions();
+});
+$('resetMap').addEventListener('click',()=>{ delete picks[style]; store.set('ens.picks',picks); renderMap(); renderOutput(); toast('Letter map reset'); });
+$('rows').addEventListener('click',e=>{ const b=e.target.closest('button[data-copy]'); if(b) copy(b.dataset.copy); });
+$('every').addEventListener('click',e=>{
+  const c=e.target.closest('button[data-copy]'); if(c){ copy(c.dataset.copy); return; }
+  const u=e.target.closest('button[data-use]'); if(!u) return;
+  style=u.dataset.use; store.set('ens.style',style); renderStyles(); renderMap(); renderOutput();
+});
+$('copyAll').addEventListener('click',()=>{
+  const all=$('src').value.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>convert(l));
+  const ok=all.filter(t=>lenOf(t)<=getLimit()); const skipped=all.length-ok.length;
+  copy(ok.join('\n')).then(()=>{ if(skipped && ok.length) toast(`Copied ${ok.length}, skipped ${skipped} over the limit`); });
+});
+$('chips').addEventListener('click',e=>{ const b=e.target.closest('button[data-g]'); if(!b) return; libGroup=b.dataset.g; renderChips(); renderGrid(); });
+$('q').addEventListener('input',renderGrid);
+$('grid').addEventListener('click',e=>{
+  const b=e.target.closest('.tile'); if(!b) return;
+  const inp=$('comp'); const s=inp.selectionStart ?? inp.value.length, en=inp.selectionEnd ?? inp.value.length;
+  inp.value = inp.value.slice(0,s) + b.dataset.c + inp.value.slice(en);
+  const pos = s + b.dataset.c.length; inp.setSelectionRange(pos,pos);
+  store.set('ens.comp',inp.value); renderCompCnt();
+  b.classList.add('hit'); setTimeout(()=>b.classList.remove('hit'),250);
+});
+$('comp').value = store.get('ens.comp','');
+function renderCompCnt(){ const n=lenOf($('comp').value), lim=getLimit(); const el=$('compCnt');
+  el.textContent = n>lim ? `${n-lim} over` : `${n}/${lim}`; el.classList.toggle('over', n>lim); }
+$('limit').value = store.get('ens.limit',20);
+$('limit').addEventListener('input',()=>{ store.set('ens.limit',getLimit()); renderOutput(); renderCompCnt(); });
+$('comp').addEventListener('input',()=>{ store.set('ens.comp',$('comp').value); renderCompCnt(); });
+$('copyComp').addEventListener('click',()=>copy($('comp').value));
+$('clearComp').addEventListener('click',()=>{ $('comp').value=''; store.set('ens.comp',''); renderCompCnt(); });
+
+renderStyles(); renderMap(); renderOutput(); renderChips(); renderGrid(); renderCompCnt();
+</script>
+</body>
+</html>
