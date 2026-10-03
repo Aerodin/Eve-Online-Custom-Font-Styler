@@ -4,7 +4,7 @@ Style names for ships, containers and other items in EVE Online using only
 characters the game's font can display. Type a name, pick a style, and copy
 the result straight into EVE's rename box.
 
-**Use it here:** https://aerodin.github.io/eve-custom-font-styler/
+**Use it here:** [https://aerodin.github.io/eve-custom-font-styler/](https://aerodin.github.io/Eve-Online-Custom-Font-Styler/)
 
 ## Features
 
